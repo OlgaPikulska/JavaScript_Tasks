@@ -29,16 +29,16 @@ flatpickr("#datetime-picker", {
     onClose(selectedDates) {
         console.log(selectedDates[0]);
         currentDateInMs = new Date().getTime();
-        console.log(currentDateInMs)
         selectedDateInMs = selectedDates[0].getTime();
-        console.log(selectedDateInMs)
-
+        
         if (selectedDateInMs < currentDateInMs) {
             Notiflix.Notify.failure("Please choose a date in the future")
+            clearInterval(timerId)
+            render("0")
         } else {
             btnStart.removeAttribute("disabled");
-            difference = selectedDateInMs - currentDateInMs;
-            
+            clearInterval(timerId)
+            render("0")
         }
     },
 });
@@ -80,6 +80,25 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
+function startTimer(difference) {
+    
+    timerId = setInterval(() => {
+        currentDateInMs += 1000;
+        difference = selectedDateInMs - currentDateInMs
+        render(difference);
+        
+        
+        if (difference <= 1000) {
+            clearInterval(timerId)
+        }
+    }, 1000)
+}
+
+btnStart.addEventListener("click", () => {
+    btnStart.setAttribute("disabled", "");
+    startTimer(difference)
+}) 
+
 // function update() {
 //     difference = getRemainingTime();
 //     console.log(difference);
@@ -89,25 +108,3 @@ function convertMs(ms) {
 // function getRemainingTime() {
 //     return selectedDateInMs - currentDateInMs;
 // }
-
-function startTimer(difference) {
-    
-    timerId = setInterval(() => {
-        currentDateInMs += 1000;
-        difference = selectedDateInMs - currentDateInMs
-        console.log(currentDateInMs);
-        console.log(difference);
-        render(difference);
-
-
-        if (difference <= 1000) {
-            clearInterval(timerId)
-        }
-    }, 1000)
-}
-
-
-btnStart.addEventListener("click", () => {
-    btnStart.setAttribute("disabled", "");
-    startTimer(difference)
-}) 
