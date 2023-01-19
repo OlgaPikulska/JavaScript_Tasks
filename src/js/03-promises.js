@@ -28,23 +28,20 @@ function handleSubmit(event) {
   formBtn.setAttribute("disabled", "");
   for (let i = 0; i < amount.value; i++) {
     createPromise(i + 1, Number(delay.value) + Number(step.value) * i)
-    .then(({ position, delay }) => {
-    Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
-    })
-    .catch(({ position, delay }) => {
-    Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
-    })
-    .finally(() => {
-      if (i === Number(amount.value)-1) {
-      formBtn.removeAttribute("disabled");
-    }
-    }
+      .then(({ position, delay }) => {
+        Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      })
+      .catch(({ position, delay }) => {
+        Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+      })
+      .finally(() => {
+        if (i === Number(amount.value) - 1) {
+          formBtn.removeAttribute("disabled");
+        }
+      }
       )
   }
-  //form.reset();
-  }
-
-
+}
 
 form.addEventListener("submit", handleSubmit)
 

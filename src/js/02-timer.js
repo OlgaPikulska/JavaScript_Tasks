@@ -30,7 +30,7 @@ flatpickr("#datetime-picker", {
         console.log(selectedDates[0]);
         currentDateInMs = new Date().getTime();
         selectedDateInMs = selectedDates[0].getTime();
-        
+
         if (selectedDateInMs < currentDateInMs) {
             Notiflix.Notify.failure("Please choose a date in the future")
             clearInterval(timerId)
@@ -44,7 +44,7 @@ flatpickr("#datetime-picker", {
 });
 
 function render(string) {
-   numberOfDays = addLeadingZero(convertMs(string).days)
+    numberOfDays = addLeadingZero(convertMs(string).days)
     counterDays.textContent = numberOfDays;
 
     numberOfHours = addLeadingZero(convertMs(string).hours)
@@ -52,42 +52,42 @@ function render(string) {
 
     numberOfMinutes = addLeadingZero(convertMs(string).minutes)
     counterMinutes.textContent = numberOfMinutes;
-            
+
     numberOfSeconds = addLeadingZero(convertMs(string).seconds)
-    counterSeconds.textContent = numberOfSeconds; 
+    counterSeconds.textContent = numberOfSeconds;
 }
 
 function addLeadingZero(value) {
-    let result = value.toString().padStart(2,"0");
+    let result = value.toString().padStart(2, "0");
     return result;
 }
-    
-function convertMs(ms) {
-  // Number of milliseconds per unit of time
-  const second = 1000;
-  const minute = second * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
 
-  // Remaining days
-  const days = Math.floor(ms / day);
-  // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
-  // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
-  return { days, hours, minutes, seconds };
+function convertMs(ms) {
+    // Number of milliseconds per unit of time
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+
+    // Remaining days
+    const days = Math.floor(ms / day);
+    // Remaining hours
+    const hours = Math.floor((ms % day) / hour);
+    // Remaining minutes
+    const minutes = Math.floor(((ms % day) % hour) / minute);
+    // Remaining seconds
+    const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+    return { days, hours, minutes, seconds };
 }
 
 function startTimer(difference) {
-    
+
     timerId = setInterval(() => {
         currentDateInMs += 1000;
         difference = selectedDateInMs - currentDateInMs
         render(difference);
-        
-        
+
+
         if (difference <= 1000) {
             clearInterval(timerId)
         }
@@ -98,13 +98,3 @@ btnStart.addEventListener("click", () => {
     btnStart.setAttribute("disabled", "");
     startTimer(difference)
 }) 
-
-// function update() {
-//     difference = getRemainingTime();
-//     console.log(difference);
-//     render(difference);
-// }
-
-// function getRemainingTime() {
-//     return selectedDateInMs - currentDateInMs;
-// }

@@ -4,7 +4,7 @@ stopBtn.setAttribute("disabled", "");
 const body = document.querySelector("body");
 
 function getRandomHexColor() {
-  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 
 let timerId = null
@@ -22,11 +22,3 @@ stopBtn.addEventListener("click", () => {
     stopBtn.setAttribute("disabled", "");
     clearInterval(timerId);
 })
-
-
-
-
-
-
-
-//window.addEventListener("load", changeColor);
